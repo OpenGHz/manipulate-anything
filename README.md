@@ -1,4 +1,4 @@
-# Manipulate Anything
+# Manipulate-Anything
 ## Installation
 1. Create conda environment
 ```bash
