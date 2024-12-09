@@ -79,11 +79,15 @@ python setup.py develop
 ## Data Generation
 
 1. Download [checkpoint](https://drive.google.com/file/d/1ZK2IwhHcVk-hPEC0DSvtENYUi_n0lKYk/view?usp=sharing).
-2. Run meshcat server. 
+2. Setup GPT4V API-key.
 ```bash
 meshcat-server
+```  
+4. Run meshcat server. 
+```bash
+export OPENAI_API_KEY="your_api_key_here"
 ```
-3. Zero-shot data generation. Example task (Put_block_on_target):
+4. Zero-shot data generation. Example task (Put_block_on_target):
 ```bash
 python demo_rlbench.py \
 eval.task=pick \
@@ -92,7 +96,7 @@ rlbench.demo_path=data/demos \
 rlbench.episode_id=1 \
 rlbench.frame_id=0
 ```
-4. Open http://127.0.0.1:7000/static to see the visualization. Press enter in terminal to see the next pose generated.
+5. Open http://127.0.0.1:7000/static to see the visualization. Press enter in terminal to see the next pose generated.
 
 ## Evaluation
 
