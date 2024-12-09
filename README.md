@@ -83,7 +83,7 @@ python setup.py develop
 ```bash
 meshcat-server
 ```
-3. For picking, click on the object. Example command:
+3. Zero-shot data generation. Example task (Put_block_on_target):
 ```bash
 python demo_rlbench.py \
 eval.task=pick \
