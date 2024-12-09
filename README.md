@@ -7,7 +7,7 @@
 **Manipulate-Anything:Automating Real-World Robots using Vision-Language Models** [[Paper]([https://arxiv.org/pdf/2406.10721](https://arxiv.org/pdf/2406.18915))] <br>
 [Jiafei Duan*](https://duanjiafei.com), [Wentao Yuan*](https://wentaoyuan.github.io), [Wilbert Pumacay](https://wpumacay.github.io), [Yi Ru Wang](https://helen9975.github.io/), [Kiana Ehsani](https://ehsanik.github.io/), [Dieter Fox](https://homes.cs.washington.edu/~fox), [Ranjay Krishna](https://ranjaykrishna.com)
 
-![Overview](figures/overview.gif)
+![Overview](overview.gif)
 
 ## Introduction
 MANIPULATE-ANYTHING, a scalable automated generation method for real-world robotic manipulation. Unlike prior work, our method can operate in real-world environments without any privileged state information, hand-designed skills, and can manipulate any static object.
@@ -78,14 +78,12 @@ python setup.py develop
 
 ## Data Generation
 
-## Demo
-1. Download [demo data](https://drive.google.com/file/d/1bq-MjSVNKire1PclTiosavW0YDQc666t/view?usp=sharing).
-2. Download [checkpoint](https://drive.google.com/file/d/1ZK2IwhHcVk-hPEC0DSvtENYUi_n0lKYk/view?usp=sharing).
-3. Run meshcat server. 
+1. Download [checkpoint](https://drive.google.com/file/d/1ZK2IwhHcVk-hPEC0DSvtENYUi_n0lKYk/view?usp=sharing).
+2. Run meshcat server. 
 ```bash
 meshcat-server
 ```
-4. For picking, click on the object. Example command:
+3. For picking, click on the object. Example command:
 ```bash
 python demo_rlbench.py \
 eval.task=pick \
@@ -94,16 +92,7 @@ rlbench.demo_path=data/demos \
 rlbench.episode_id=1 \
 rlbench.frame_id=0
 ```
-4. For placing, first click on the object in gripper, then draw the bounding box for placement region by clicking two times in the new window. Example command:
-```bash
-python demo_rlbench.py \
-eval.task=place \
-eval.checkpoint=checkpoints/pick_and_place.pth \
-rlbench.demo_path=data/demos \
-rlbench.episode_id=1 \
-rlbench.frame_id=100
-```
-5. Open http://127.0.0.1:7000/static to see the visualization. Press enter in terminal to see the next pose generated.
+4. Open http://127.0.0.1:7000/static to see the visualization. Press enter in terminal to see the next pose generated.
 
 ## Evaluation
 
