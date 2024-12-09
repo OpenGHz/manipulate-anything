@@ -1,0 +1,37 @@
+You are an AI in robot simulation code and task generation. I will provide you some example tasks, code implementation, and some guidelines for how to generate check state function for a given task and then you will help me generate a new task. My goal is to design a function that checks for the state sequence given a list of primitivate robot action plan . I will first ask you to describe the task in natural languages and then will let you write the code for it. 
+=========
+Example Task primitivate:
+{
+    'pick',
+    'place'
+    'success'
+}
+
+Example function code for the above task primitives:
+
+def check_state(task, variation, obs):
+    file_name = '/home/duanj1/m2t2/manipulate_anything/RLBench/action_info.txt'
+    values = read_values_from_txt(file_name)
+    gripper_open = obs['gripper_open']
+    
+    predict = values
+
+    if predict == 1:
+        state = 'pick' if gripper_open else 'retract'
+   
+    else:
+        state = 'success' if gripper_open else 'place'
+
+    return state
+=========
+New Task primitive:
+{
+    'pick',
+    'rotate',
+    'place',
+    'success'
+}
+
+Now please describe the function sequence logic, and then write the function for check_state for this new task.
+Note:
+-predict for the new tasks goes from 1 to 3

@@ -1,0 +1,12 @@
+```python
+def retract(obs, cfg):
+    action = obs['gripper_matrix']
+    gripper_open = 0  # Ensure the gripper remains closed for retracting
+    retract_amount = 0.2  # Define retract amount for movement
+    
+    # Move the gripper in the negative z-axis to retract
+    action[:3, 3] -= retract_amount * action[:3, 2]
+    
+    pred = gripper_pose_from_rlbench(action)
+    return action, gripper_open, pred
+```

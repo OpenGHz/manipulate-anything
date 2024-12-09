@@ -1,0 +1,4 @@
+- eval.checkpoint=/home/duanj1/m2t2/manipulate_anything/RLBench/pick_and_place.pth
+- eval.mask_thresh=0.0
+- eval.retract=0.20
+- rlbench.task_name=slide_block_to_target
