@@ -13,29 +13,27 @@
 MANIPULATE-ANYTHING, a scalable automated generation method for real-world robotic manipulation. Unlike prior work, our method can operate in real-world environments without any privileged state information, hand-designed skills, and can manipulate any static object.
 
 ## Contents
-- [Env Setup & Installation](#install)
-- [Data Generation](#train)
-- [Evaluation](#evaluation)
+- [Env Setup & Installation]
+- [Data Generation]
+- [Evaluation]
 
 ## Env Setup & Installation
+
+There is a need of four different repo (including this) to setup Manipulate-Anything.
 
 1. Create conda environment
 ```bash
 conda env create -n manip_any python=3.11
-```
-2. Install cuda
-```bash
 conda install cuda -c nvidia/label/cuda-11.7.0
+conda activate manip_any
 ```
-3. Install requirements
+
+2. Setup and install Manipulate-Anything-QWenVL
 ```bash
-pip install -r requirements
+to be provided
 ```
-4. Install pointnet2_ops
-```bash
-pip install pointnet2_ops/
-```
-5. Install PyRep
+
+3. Install PyRep
 PyRep requires version **4.1** of CoppeliaSim. Download: 
 - [Ubuntu 16.04](https://www.coppeliarobotics.com/files/CoppeliaSim_Edu_V4_1_0_Ubuntu16_04.tar.xz)
 - [Ubuntu 18.04](https://www.coppeliarobotics.com/files/CoppeliaSim_Edu_V4_1_0_Ubuntu18_04.tar.xz)
@@ -62,25 +60,23 @@ zshrc (`source ~/.zshrc`) after this.
 
 **Warning**: CoppeliaSim might cause conflicts with ROS workspaces. 
 
-Finally install the python library:
 
+4. Install current repo
 ```bash
+pip install pointnet2_ops/
+cd pointnet2_ops
 pip install -r requirements.txt
 pip install .
 ```
-6. Install RLBench
-```bash
-cd <install_dir>
-git clone -b m2t2 https://github.com/wentaoyuan/RLBench.git # note: 'm2t2' branch
 
+```bash
+git clone https://github.com/Robot-MA/manipulate-anything.git
 cd RLBench
 pip install -r requirements.txt
 python setup.py develop
 ```
-7. Activate environment
-```bash
-conda activate manip_any
-```
+
+## Data Generation
 
 ## Demo
 1. Download [demo data](https://drive.google.com/file/d/1bq-MjSVNKire1PclTiosavW0YDQc666t/view?usp=sharing).
@@ -108,10 +104,6 @@ rlbench.episode_id=1 \
 rlbench.frame_id=100
 ```
 5. Open http://127.0.0.1:7000/static to see the visualization. Press enter in terminal to see the next pose generated.
-
-
-
-## Data Generation
 
 ## Evaluation
 
