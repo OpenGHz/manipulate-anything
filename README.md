@@ -30,8 +30,9 @@ conda activate manip_any
 
 2. Setup and install Manipulate-Anything-QWenVL
 ```bash
-to be provided
+git clone https://github.com/Robot-MA/QWen-VL-MA.git
 ```
+Go into the [QWen-VL-MA](https://github.com/Robot-MA/QWen-VL-MA) and follow the steps.
 
 3. Install PyRep
 PyRep requires version **4.1** of CoppeliaSim. Download: 
