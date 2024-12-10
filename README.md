@@ -118,6 +118,13 @@ python dataset_generator.py \
 ## Evaluation
 To reproduce the tasks from the paper, please swap out the .py and .ttm tasks folder from your RLBench task env with [eval_tasks](https://github.com/Robot-MA/manipulate-anything/tree/main/eval_tasks).
 
+## TODO List
+
+### Future improvement 
+- [ ] Include multi-process functionality for searching the best MA plans.
+- [ ] Set up interactive mode on Gradio.
+- [ ] Include policy training code
+
 
 ## Citation
 
