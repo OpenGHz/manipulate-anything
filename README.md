@@ -116,8 +116,7 @@ python dataset_generator.py \
 5. Open http://127.0.0.1:7000/static to see the visualization. Press enter in terminal to see the next pose generated.
 
 ## Evaluation
-
-
+To reproduce the tasks from the paper, please swap out the .py and .ttm tasks folder from your RLBench task env with [eval_tasks](https://github.com/Robot-MA/manipulate-anything/tree/main/eval_tasks).
 
 
 ## Citation
