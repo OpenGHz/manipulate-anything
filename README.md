@@ -29,9 +29,6 @@ conda activate manip_any
 ```
 
 2. Setup and install Manipulate-Anything-QWenVL
-```bash
-git clone https://github.com/Robot-MA/QWen-VL-MA.git
-```
 Go into the [QWen-VL-MA](https://github.com/Robot-MA/QWen-VL-MA) and follow the steps.
 
 3. Install PyRep
@@ -90,12 +87,11 @@ export OPENAI_API_KEY="your_api_key_here"
 ```
 4. Zero-shot data generation. Example task (Put_block_on_target):
 ```bash
-python demo_rlbench.py \
-eval.task=pick \
-eval.checkpoint=checkpoints/pick_and_place.pth \
-rlbench.demo_path=data/demos \
-rlbench.episode_id=1 \
-rlbench.frame_id=0
+python dataset_generator.py \
+    eval.checkpoint=<PATH_TO_M2T2_CHECKPOINT> \
+    eval.mask_thresh=0.0 \
+    eval.retract=0.20 \
+    rlbench.task_name=<TASK_NAME>
 ```
 5. Open http://127.0.0.1:7000/static to see the visualization. Press enter in terminal to see the next pose generated.
 
