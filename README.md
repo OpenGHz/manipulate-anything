@@ -67,8 +67,19 @@ zshrc (`source ~/.zshrc`) after this.
 
 **Warning**: CoppeliaSim might cause conflicts with ROS workspaces. 
 
+4. Install YARR
+Manipulate-Anything uses my [YARR fork](https://github.com/MohitShridhar/YARR/tree/peract).
 
-4. Install current repo
+```bash
+cd <install_dir>
+git clone -b peract https://github.com/MohitShridhar/YARR.git # note: 'peract' branch
+
+cd YARR
+pip install -r requirements.txt
+python setup.py develop
+```
+
+5. Install current repo
 ```bash
 pip install pointnet2_ops/
 cd pointnet2_ops
