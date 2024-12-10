@@ -1,27 +1,36 @@
-# Manipulate-Anything:Automating Real-World Robots using Vision-Language Models
+# Manipulate-Anything: Automating Real-World Robots using Vision-Language Models
 
 *A scalable automated generation method for real-world robotic manipulation.*
 
-[[Project Page]([https://robo-point.github.io](https://robot-ma.github.io/))] [[Data](https://drive.google.com/drive/folders/1bq3P8ywJkFMxemq9ywvj2b7LHsAhx2kg)] [[Paper](https://robot-ma.github.io/MA_paper.pdf)]
+[**Project Page**](https://robot-ma.github.io/) | [**Data**](https://drive.google.com/drive/folders/1bq3P8ywJkFMxemq9ywvj2b7LHsAhx2kg) | [**Paper**](https://robot-ma.github.io/MA_paper.pdf)
 
-**Manipulate-Anything:Automating Real-World Robots using Vision-Language Models** [[Paper]([https://arxiv.org/pdf/2406.10721](https://arxiv.org/pdf/2406.18915))] <br>
-[Jiafei Duan*](https://duanjiafei.com), [Wentao Yuan*](https://wentaoyuan.github.io), [Wilbert Pumacay](https://wpumacay.github.io), [Yi Ru Wang](https://helen9975.github.io/), [Kiana Ehsani](https://ehsanik.github.io/), [Dieter Fox](https://homes.cs.washington.edu/~fox), [Ranjay Krishna](https://ranjaykrishna.com)
+---
+
+## Overview
+
+**Manipulate-Anything** is a scalable automated generation method for real-world robotic manipulation. Unlike prior work, this method operates in real-world environments without privileged state information or hand-designed skills, enabling manipulation of any static object.
 
 ![Overview](overview.gif)
 
-## Introduction
-MANIPULATE-ANYTHING, a scalable automated generation method for real-world robotic manipulation. Unlike prior work, our method can operate in real-world environments without any privileged state information, hand-designed skills, and can manipulate any static object.
+## Authors
 
-## Contents
-- [Env Setup & Installation]
-- [Data Generation]
-- [Evaluation]
+[Jiafei Duan*](https://duanjiafei.com), [Wentao Yuan*](https://wentaoyuan.github.io), [Wilbert Pumacay](https://wpumacay.github.io), [Yi Ru Wang](https://helen9975.github.io/), [Kiana Ehsani](https://ehsanik.github.io/), [Dieter Fox](https://homes.cs.washington.edu/~fox), [Ranjay Krishna](https://ranjaykrishna.com)
 
-## Env Setup & Installation
+## Table of Contents
 
-There is a need of four different repo (including this) to setup Manipulate-Anything.
+- [Environment Setup](#environment-setup)
+- [Data Generation](#data-generation)
+- [Evaluation](#evaluation)
+- [Citation](#citation)
 
-1. Create conda environment
+---
+
+## Environment Setup
+
+To set up the Manipulate-Anything environment, you will need four repositories, including this one.
+
+### 1. Create Conda Environment
+
 ```bash
 conda env create -n manip_any python=3.11
 conda install cuda -c nvidia/label/cuda-11.7.0
