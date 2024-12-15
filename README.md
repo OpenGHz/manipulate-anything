@@ -96,7 +96,7 @@ python setup.py develop
 
 ## Data Generation
 
-1. Download [checkpoint](https://drive.google.com/file/d/1ZK2IwhHcVk-hPEC0DSvtENYUi_n0lKYk/view?usp=sharing).
+1. Download [checkpoint](https://drive.google.com/file/d/1Lo3kQ68xexWt3jR5xXHGNUzaYrw6hE75/view?usp=sharing).
 2. Setup GPT4V API-key.
 ```bash
 meshcat-server
