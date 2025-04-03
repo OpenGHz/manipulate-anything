@@ -115,6 +115,10 @@ python dataset_generator.py \
 ```
 5. Open http://127.0.0.1:7000/static to see the visualization. Press enter in terminal to see the next pose generated.
 
+## What it should look like if everything has been setup correctly.
+
+![Overview](simplescreenrecorder-2024-08-26_00.18.10-ezgif.com-video-to-gif-converter.gif)
+
 ## Evaluation
 To reproduce the tasks from the paper, please swap out the .py and .ttm tasks folder from your RLBench task env with [eval_tasks](https://github.com/Robot-MA/manipulate-anything/tree/main/eval_tasks).
 
