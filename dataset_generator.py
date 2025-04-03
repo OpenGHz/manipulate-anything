@@ -441,8 +441,9 @@ def main(cfg):
 
         for step in range(cfg.rlbench.episode_length):
             print("STEP:" + str(counter))
-            if counter == 1:
-                subprocess.run(["python", "/home/duanj1/CameraCalibration/LLMs/Qwen-VL/planner.py"])
+            # For new task or zero-shot
+            # if counter == 1:
+            #     subprocess.run(["python", "/home/duanj1/CameraCalibration/LLMs/Qwen-VL/planner.py"])
     
 
             with open(file_path_log, 'a') as file:
