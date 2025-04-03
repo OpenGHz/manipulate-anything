@@ -105,7 +105,7 @@ meshcat-server
 ```bash
 export OPENAI_API_KEY="your_api_key_here"
 ```
-4. Zero-shot data generation. Example task (Put_block_on_target):
+4. Zero-shot data generation. Example task (play_jenga):
 ```bash
 python dataset_generator.py \
     eval.checkpoint=<PATH_TO_M2T2_CHECKPOINT> \
