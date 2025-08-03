@@ -220,8 +220,9 @@ def task_file_to_task_class(task_file):
 def rgb_handles_to_mask(rgb_coded_handles):
   # rgb_coded_handles should be (w, h, c)
   # Handle encoded as : handle = R + G * 256 + B * 256 * 256
+  rgb_coded_handles = rgb_coded_handles.astype(np.float64)  # Convert to avoid overflow
   rgb_coded_handles *= 255  # takes rgb range to 0 -> 255
-  rgb_coded_handles.astype(int)
+  rgb_coded_handles = rgb_coded_handles.astype(np.int64)  # Convert to int64 for calculations
   return (rgb_coded_handles[:, :, 0] +
           rgb_coded_handles[:, :, 1] * 256 +
           rgb_coded_handles[:, :, 2] * 256 * 256)
