@@ -1,3 +1,4 @@
+import os
 import argparse
 import numpy as np
 from rlbench.action_modes.action_mode import MoveArmThenGripper
@@ -11,7 +12,6 @@ from rlbench.backend.observation import Observation
 from pyrep.const import RenderMode
 from types import SimpleNamespace
 from rlbench.backend import utils
-import os
 
 
 def get_observation_config(rlbench_cfg):
@@ -62,9 +62,9 @@ class DataReplayAgent:
         # print(f"Current step: {self._cur_step}, Point: {point}")
         action = np.concatenate([point.gripper_pose, [point.gripper_open, 1.0]], axis=0)
         assert action.shape == (9,), f"Action shape mismatch: {action.shape}"
-        self._cur_step += 1
         if self._cur_step >= len(self._cur_demo):
             raise StopIteration("Reached the end of the current demo.")
+        self._cur_step += 1
         return action
 
     def reset(self, episode: int):
@@ -118,6 +118,9 @@ parser.add_argument(
     "--max-rounds", type=int, default=2, help="Maximum number of rounds to run"
 )
 parser.add_argument("--eval", action="store_true", help="Run evaluation")
+parser.add_argument(
+    "-hl", "--headless", action="store_true", help="Run in headless mode"
+)
 args = parser.parse_args()
 
 np.random.seed(args.seed)
@@ -139,7 +142,7 @@ env = Environment(
     action_mode=MoveArmThenGripper(EndEffectorPoseViaPlanning(), Discrete()),
     dataset_root=data_root,
     obs_config=obs_config,
-    headless=False,
+    headless=args.headless,
 )
 env.launch()
 
