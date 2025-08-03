@@ -129,9 +129,9 @@ parser.add_argument(
     help="Path to dataset root",
 )
 parser.add_argument("--live-demos", action="store_true", help="Use live demos")
-parser.add_argument(
-    "-n", "--num-demos", type=int, default=2, help="Number of demos to fetch"
-)
+# parser.add_argument(
+#     "-n", "--num-demos", type=int, default=2, help="Number of demos to fetch"
+# )
 parser.add_argument(
     "--max-steps", type=int, default=300, help="Maximum steps per round"
 )
@@ -179,11 +179,11 @@ if not evaluate:
 else:
     agent = PolicyAgent()
 
-rounds = agent.get_rounds() or 2
+rounds = agent.get_rounds() or args.max_rounds
 try:
     for r in range(rounds):
         agent.reset(r)
-        steps = agent.get_steps() or 300
+        steps = agent.get_steps() or args.max_steps
         if input(
             f"Round {r + 1}/{rounds}. Max steps: {steps}. Press Enter to continue..."
         ):
