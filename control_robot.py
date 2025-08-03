@@ -12,6 +12,7 @@ from rlbench.backend.observation import Observation
 from pyrep.const import RenderMode
 from types import SimpleNamespace
 from rlbench.backend import utils
+from PIL import Image
 
 
 def get_observation_config(rlbench_cfg):
@@ -45,6 +46,26 @@ def get_observation_config(rlbench_cfg):
         obs_config.wrist_camera.render_mode = RenderMode.OPENGL
         obs_config.front_camera.render_mode = RenderMode.OPENGL
     return obs_config
+
+
+def save_images(obs: Observation):
+    def save_mask(image, name):
+        mask = Image.fromarray((image * 255).astype(np.uint8))
+        mask.save(name)
+
+    def save_rgb(image, name):
+        rgb = Image.fromarray(image)
+        rgb.save(name)
+
+    save_mask(obs.front_mask, "front_mask.png")
+    save_mask(obs.left_shoulder_mask, "left_shoulder_mask.png")
+    save_mask(obs.right_shoulder_mask, "right_shoulder_mask.png")
+    save_mask(obs.wrist_mask, "wrist_mask.png")
+
+    save_rgb(obs.front_rgb, "front_rgb.png")
+    save_rgb(obs.left_shoulder_rgb, "left_shoulder_rgb.png")
+    save_rgb(obs.right_shoulder_rgb, "right_shoulder_rgb.png")
+    save_rgb(obs.wrist_rgb, "wrist_rgb.png")
 
 
 class DataReplayAgent:
@@ -171,7 +192,10 @@ try:
         # task_env.set_variation(variation)
         descriptions, obs = task_env.reset()
         obs: Observation
+        # save_images(obs)
         for s in range(steps):
+            if input("Press Enter to continue..."):
+                break
             action = agent.act(obs)
             obs, reward, terminate = task_env.step(action)
             success, terminate = task_env._task.success()
