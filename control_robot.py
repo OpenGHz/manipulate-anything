@@ -78,6 +78,23 @@ class DataReplayAgent:
         return len(self._cur_demo)
 
 
+class PolicyAgent:
+    def __init__(self):
+        pass
+
+    def act(self, obs):
+        pass
+
+    def reset(self, episode: int):
+        pass
+
+    def get_rounds(self):
+        return None
+
+    def get_steps(self):
+        return None
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-tn", "--task-name", type=str, default="close_box")
 parser.add_argument(
@@ -91,7 +108,16 @@ parser.add_argument(
     help="Path to dataset root",
 )
 parser.add_argument("--live-demos", action="store_true", help="Use live demos")
-parser.add_argument("--num-demos", type=int, default=2, help="Number of demos to fetch")
+parser.add_argument(
+    "-n", "--num-demos", type=int, default=2, help="Number of demos to fetch"
+)
+parser.add_argument(
+    "--max-steps", type=int, default=300, help="Maximum steps per round"
+)
+parser.add_argument(
+    "--max-rounds", type=int, default=2, help="Maximum number of rounds to run"
+)
+parser.add_argument("--eval", action="store_true", help="Run evaluation")
 args = parser.parse_args()
 
 np.random.seed(args.seed)
@@ -99,10 +125,11 @@ np.random.seed(args.seed)
 data_root = os.path.abspath(args.dataset_root)
 task_name = args.task_name
 live_demos = args.live_demos
+evaluate = args.eval
 
-if not live_demos:
+if not live_demos and not evaluate:
     assert os.path.exists(data_root), f"Dataset root {data_root} does not exist."
-# data_path = os.path.join(data_root, task_name)
+
 
 obs_config = get_observation_config(
     SimpleNamespace(camera_resolution=(256, 256), renderer=None)
@@ -118,11 +145,15 @@ env.launch()
 
 task_env = env.get_task(utils.task_file_to_task_class(task_name))
 possible_variations = task_env.variation_count()
+print(f"Task variations: {possible_variations}")
 task_env.set_variation(-1)
 
 np.set_printoptions(suppress=True)
 
-agent = DataReplayAgent(task_env, live_demos)
+if not evaluate:
+    agent = DataReplayAgent(task_env, live_demos)
+else:
+    agent = PolicyAgent()
 
 rounds = agent.get_rounds() or 2
 try:
