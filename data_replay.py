@@ -47,6 +47,37 @@ def get_observation_config(rlbench_cfg):
     return obs_config
 
 
+class DataReplayAgent:
+    def __init__(self, task_env: Environment, live_demos: bool):
+        # List[List[Observation]]
+        self.demos = task_env.get_demos(-1, live_demos=live_demos)
+        print(f"Fetched {len(self.demos)} demos.")
+        first_demo = self.demos[0]
+        print(first_demo)
+        first_obs = first_demo[0]
+        print(f"First obs info: {first_obs.left_shoulder_rgb.shape}")
+
+    def act(self, obs):
+        point = self._cur_demo[self._cur_step]
+        # print(f"Current step: {self._cur_step}, Point: {point}")
+        action = np.concatenate([point.gripper_pose, [point.gripper_open, 1.0]], axis=0)
+        assert action.shape == (9,), f"Action shape mismatch: {action.shape}"
+        self._cur_step += 1
+        if self._cur_step >= len(self._cur_demo):
+            raise StopIteration("Reached the end of the current demo.")
+        return action
+
+    def reset(self, episode: int):
+        self._cur_demo = self.demos[episode]
+        self._cur_step = 0
+
+    def get_rounds(self):
+        return len(self.demos)
+
+    def get_steps(self):
+        return len(self._cur_demo)
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-tn", "--task-name", type=str, default="close_box")
 parser.add_argument(
@@ -91,18 +122,13 @@ task_env.set_variation(-1)
 
 np.set_printoptions(suppress=True)
 
-demos = task_env.get_demos(-1, live_demos=live_demos)  # -> List[List[Observation]]
-print(f"Fetched {len(demos)} demos.")
-first_demo = demos[0]
-print(first_demo)
-first_obs = first_demo[0]
-print(f"First obs info: {first_obs.left_shoulder_rgb.shape}")
+agent = DataReplayAgent(task_env, live_demos)
 
-rounds = len(demos)
+rounds = agent.get_rounds() or 2
 try:
     for r in range(rounds):
-        demo = demos[r]
-        steps = len(demo)
+        agent.reset(r)
+        steps = agent.get_steps() or 300
         if input(
             f"Round {r + 1}/{rounds}. Max steps: {steps}. Press Enter to continue..."
         ):
@@ -112,13 +138,7 @@ try:
         descriptions, obs = task_env.reset()
         obs: Observation
         for s in range(steps):
-            point: Observation = demo[s]
-            print(f"Step {s + 1}/{steps}")
-            print(f"{point.gripper_pose=}, {point.gripper_open=}")
-            action = np.concatenate(
-                [point.gripper_pose, [point.gripper_open, 1.0]], axis=0
-            )
-            assert action.shape == (9,), f"Action shape mismatch: {action.shape}"
+            action = agent.act(obs)
             obs, reward, terminate = task_env.step(action)
             success, terminate = task_env._task.success()
             if success:
