@@ -13,7 +13,7 @@ from rlbench.backend.const import *
 from rlbench.backend.utils import image_to_float_array, rgb_handles_to_mask
 from rlbench.demo import Demo
 from rlbench.observation_config import ObservationConfig
-
+import cv2
 
 class InvalidTaskName(Exception):
     pass
@@ -343,3 +343,56 @@ def _resize_if_needed(image, size):
     if image.size[0] != size[0] or image.size[1] != size[1]:
         image = image.resize(size)
     return image
+
+
+def get_rgb_mask(
+    raw_rgb_image: np.ndarray,
+    raw_mask_image: np.ndarray,
+    peak_choices: list,
+    rgb_choices: list,
+):
+    if False:
+        gray_image = (
+            (raw_mask_image[..., 0].astype(np.uint32) << 16)
+            | (raw_mask_image[..., 1].astype(np.uint32) << 8)
+            | (raw_mask_image[..., 2].astype(np.uint32))
+        )
+    else:
+        gray_image = cv2.cvtColor(raw_mask_image, cv2.COLOR_BGR2GRAY)
+    # print(raw_mask_image.shape)
+    hist = cv2.calcHist([gray_image], [0], None, [256], [0, 256])
+    # print(hist.shape)
+    # print(hist[0:3])
+
+    peak_start = -1
+    peaks = []
+    for i, point in enumerate(hist):
+        if point > 0:
+            if peak_start < 0:
+                peak_start = i
+        else:
+            if peak_start >= 0:
+                peaks.append((peak_start, i))
+                peak_start = -1
+
+    cur_peak_choices = peak_choices.copy()
+    for i, pc in enumerate(peak_choices.copy()):
+        if isinstance(pc, int):
+            cur_peak_choices[i] = peaks[pc]
+        elif isinstance(pc, slice):
+            cur_peak_choices.pop(i)
+            cur_peak_choices.extend(peaks[pc])
+
+    mask = np.zeros_like(gray_image)
+    for peak in cur_peak_choices:
+        roi = (gray_image >= peak[0]) & (gray_image < peak[1])
+        mask[roi] = 1
+    for color in rgb_choices or []:
+        roi = np.all(
+            (raw_rgb_image >= color[0]) & (raw_rgb_image <= color[1]),
+            axis=-1,
+        )
+        mask[roi] = 1
+    masked_image = (mask[..., np.newaxis] * raw_rgb_image).astype(np.uint8)
+
+    return masked_image, gray_image, hist, peaks, peak_choices

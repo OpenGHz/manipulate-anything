@@ -16,6 +16,7 @@ from rlbench.backend import utils
 from rlbench.backend.const import *
 from rlbench.backend.utils import task_file_to_task_class
 from rlbench.environment import Environment
+import time
 
 
 def check_and_make(dir):
@@ -207,6 +208,7 @@ def run(i, lock, task_index, variation_count, results, file_lock, tasks, args):
         with lock:
 
             if task_index.value >= num_tasks:
+                print(f"Time cost: {time.time() - start_time:.2f} seconds")
                 print('Process', i, 'finished')
                 break
 
@@ -224,6 +226,7 @@ def run(i, lock, task_index, variation_count, results, file_lock, tasks, args):
 
             variation_count.value += 1
             if task_index.value >= num_tasks:
+                print(f"Time cost: {time.time() - start_time:.2f} seconds")
                 print('Process', i, 'finished')
                 break
             t = tasks[task_index.value]
@@ -247,6 +250,7 @@ def run(i, lock, task_index, variation_count, results, file_lock, tasks, args):
 
         abort_variation = False
         for ex_idx in range(args.episodes_per_task):
+            start_time = time.time()
             print('Process', i, '// Task:', task_env.get_name(),
                   '// Variation:', my_variation_count, '// Demo:', ex_idx)
             attempts = 10

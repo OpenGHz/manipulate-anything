@@ -198,7 +198,6 @@ try:
                 break
             action = agent.act(obs)
             print(action)
-            break
             obs, reward, terminate = task_env.step(action)
             success, terminate = task_env._task.success()
             if success:
